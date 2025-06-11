@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:heliopython.org)",
+      "WebFetch(domain:github.com)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "WebFetch(domain:sunpy.org)",
+      "WebFetch(domain:docs.sunpy.org)",
+      "WebFetch(domain:plasmapy.org)",
+      "WebFetch(domain:docs.plasmapy.org)",
+      "WebFetch(domain:pysat.readthedocs.io)",
+      "WebFetch(domain:pyspedas.readthedocs.io)",
+      "WebFetch(domain:spacepy.github.io)",
+      "Bash(python:*)",
+      "Bash(cp:*)"
+    ],
+    "deny": []
+  }
+}

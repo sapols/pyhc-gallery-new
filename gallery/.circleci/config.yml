@@ -1,0 +1,50 @@
+# Python CircleCI 2.0 configuration file
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+version: 2
+
+pip-run: &pip-install
+  name: Install Python dependencies
+  command: |
+    sudo pip install tox
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+
+    steps:
+      - checkout
+      - add_ssh_keys: # add GitHub SSH keys
+          fingerprints:
+            - 00:59:42:61:1f:ac:46:a3:a7:bc:25:fc:82:01:5f:1a
+      - run: *pip-install # run the pip install defined above
+
+      # - restore_cache: # Need cache for all tutorial data!
+      #     keys: sample-data-v1
+
+      - run:
+          name: Build documentation
+          command: |
+            tox -e build_gallery
+
+      - store_artifacts:
+          path: _build/html
+
+      - run:
+          name: Built documentation is available at
+          command: |
+            DOCS_URL="${CIRCLE_BUILD_URL}/artifacts/${CIRCLE_NODE_INDEX}/${CIRCLE_WORKING_DIRECTORY/#\~/$HOME}/_build/html/index.html"; echo $DOCS_URL
+
+      - run:
+          name: Push to gh-pages branch
+          command: |
+            bash .circleci/gh-pages-push.sh
+
+      # - save_cache: # Specify what paths to cache
+      #     key: sample-data-v1
+      #     paths:
+      #       - ~/sunpy/data/sample_data
+
+notify:
+  webhooks:
+    - url: https://giles.cadair.dev/circleci

@@ -1,0 +1,7 @@
+numpy
+astropy
+sunpy
+pytplot
+pyspedas
+aiapy
+spacepy
